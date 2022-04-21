@@ -46,10 +46,31 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBAction func save(_ sender: Any) {
     }
     @IBAction func changeFilter(_ sender: Any) {
+        let ac = UIAlertController(title: "Choose filter", message: nil, preferredStyle: .actionSheet)
+        
+        let filter01 = UIAlertAction(title: "CIBumpDistortion", style: .default, handler: setFilter)
+        let filter02 = UIAlertAction(title: "CIGaussianBlur", style: .default, handler: setFilter)
+        let filter03 = UIAlertAction(title: "CIPixellate", style: .default, handler: setFilter)
+        let filter04 = UIAlertAction(title: "CISepiaTone", style: .default, handler: setFilter)
+        let filter05 = UIAlertAction(title: "CITwirlDistortion", style: .default, handler: setFilter)
+        let filter06 = UIAlertAction(title: "CIUnsharpMask", style: .default, handler: setFilter)
+        let filter07 = UIAlertAction(title: "CIVignette", style: .default, handler: setFilter)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        ac.addAction(filter01)
+        ac.addAction(filter02)
+        ac.addAction(filter03)
+        ac.addAction(filter04)
+        ac.addAction(filter05)
+        ac.addAction(filter06)
+        ac.addAction(filter07)
+        ac.addAction(cancel)
+        
+        present(ac, animated: true)
     }
     @IBAction func intensityChanged(_ sender: Any) {
         applyProcessing()
-    } 
+    }
     
     func applyProcessing() {
         guard let outputImage = currentFilter.outputImage else { fatalError("Couldn't read the output image") }
@@ -60,6 +81,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             imageView.image = processedImage
         }
     }
+    
+    func setFilter(action: UIAlertAction) {}
     
 }
 
