@@ -49,7 +49,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     @IBAction func intensityChanged(_ sender: Any) {
         applyProcessing()
-    }
+    } 
     
     func applyProcessing() {
         guard let outputImage = currentFilter.outputImage else { fatalError("Couldn't read the output image") }
