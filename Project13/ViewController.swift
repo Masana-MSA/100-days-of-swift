@@ -60,5 +60,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             imageView.image = processedImage
         }
     }
+    
 }
 
