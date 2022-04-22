@@ -45,7 +45,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @IBAction func save(_ sender: Any) {
     }
-    @IBAction func changeFilter(_ sender: Any) {
+    @IBAction func changeFilter(_ sender: UIButton) {
         let ac = UIAlertController(title: "Choose filter", message: nil, preferredStyle: .actionSheet)
         
         let filter01 = UIAlertAction(title: "CIBumpDistortion", style: .default, handler: setFilter)
@@ -66,6 +66,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         ac.addAction(filter07)
         ac.addAction(cancel)
         
+        if let popoverController = ac.popoverPresentationController {
+            popoverController.sourceView = sender
+            popoverController.sourceRect = sender.bounds
+        }
+        
         present(ac, animated: true)
     }
     @IBAction func intensityChanged(_ sender: Any) {
@@ -82,7 +87,18 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
     }
     
-    func setFilter(action: UIAlertAction) {}
+    func setFilter(action: UIAlertAction) {
+        guard currentFilter != nil else { return }
+        guard currentImage != nil else { return }
+        guard let actionTitle = action.title else { return }
+        
+        currentFilter = CIFilter(name: actionTitle)
+        
+        let beginImage = CIImage(image: currentImage)
+        currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
+        
+        applyProcessing()
+    }
     
 }
 
